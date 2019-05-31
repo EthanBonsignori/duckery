@@ -1,3 +1,8 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+canvas{
+  border: solid black 3px;
+  border-radius: 5px;
+}
