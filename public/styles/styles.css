@@ -2,6 +2,10 @@
   line-height: 2.5;
 }
 
+body{
+  background-color: skyblue;
+}
+
 canvas{
   border: solid black 3px;
   border-radius: 5px;

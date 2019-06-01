@@ -338,5 +338,24 @@ $("#squeeze").on("click", function() {
     })
     .animateLayer("bill", {
       scaleY: 1
+    })
+    .drawImage({
+      name: "balloon",
+      layer: true,
+      source: "./balloon.svg",
+      x: 435,
+      y: 90
+    })
+    .drawText({
+      name: "tips",
+      layer: true,
+      fillStyle: "#000",
+      fontStyle: "bold",
+      fontSize: "18pt",
+      fontFamily: "Comic Sans MS, cursive, sans-serif",
+      text: "Quack! There is no ethical consumption under capitalism!",
+      x: 445,
+      y: 90,
+      maxWidth: 290
     });
 });
