@@ -103,6 +103,7 @@ $exampleList.on("click", ".delete", handleDeleteBtnClick);
 var headColor = "yellow";
 var bodyColor = "yellow";
 var billColor = "orange";
+var hatOn = false;
 
 $("canvas")
   .drawEllipse({
@@ -227,10 +228,19 @@ $("#download").on("click", function() {
 });
 
 $("#addhat").on("click", function() {
-  $("canvas").drawImage({
-    layer: true,
-    source: "./hats/hattest.svg",
-    x: 155,
-    y: 70
-  });
+  if (hatOn) {
+    $("canvas")
+      .removeLayer("hat")
+      .drawLayers();
+    hatOn = false;
+  } else {
+    $("canvas").drawImage({
+      name: "hat",
+      layer: true,
+      source: "./hats/l3helmet.svg",
+      x: 155,
+      y: 140
+    });
+    hatOn = true;
+  }
 });
