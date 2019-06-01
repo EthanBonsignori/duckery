@@ -1,3 +1,50 @@
+// This demo will work on iOS, Android, and desktop browsers
+// Draw the outline of an unclosed path (ie a duck part), click to apply a random color from the array
+var headColor = "yellow";
+var bodyColor = "yellow";
+var billColor = "orange";
+var hatOn = false;
+
+$("#head_test").on("click", function() {
+  alert("Quack! My head is " + headColor);
+});
+
+$("#body_test").on("click", function() {
+  alert("Quack! My body is " + bodyColor);
+});
+
+$("#bill_test").on("click", function() {
+  alert("Quack! My bill is " + billColor);
+});
+
+$("#download").on("click", function() {
+  $("canvas").getCanvasImage();
+  console.log("Download");
+});
+
+$("#addhat").on("click", function() {
+  if (hatOn) {
+    $("canvas")
+      .removeLayer("hat")
+      .drawLayers();
+    hatOn = false;
+  } else {
+    $("#canvas1").drawImage({
+      name: "hat",
+      groups: ["duck"],
+      layer: true,
+      shadowColor: "rgb(0, 0, 0, 0.3)",
+      shadowBlur: 15,
+      shadowX: 0,
+      shadowY: 5,
+      source: "./hats/l3helmet.svg",
+      x: 160,
+      y: 140
+    });
+    hatOn = true;
+  }
+});
+
 $("#canvas1")
   .drawEllipse({
     layer: true,
