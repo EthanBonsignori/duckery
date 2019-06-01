@@ -6,3 +6,23 @@ canvas{
   border: solid black 3px;
   border-radius: 5px;
 }
+
+.navbar{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 22pt;
+  padding: 1.5rem;
+}
+
+a{
+  color: gray;
+  background-color: rgb(245, 245, 245);
+}
+
+a:link{
+  text-decoration: none;
+}
+
+a:hover{
+  background-color: rgb(207, 207, 207);
+
+}

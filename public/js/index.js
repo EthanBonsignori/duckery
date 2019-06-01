@@ -111,8 +111,8 @@ $("canvas")
     strokeStyle: "#000",
     strokeWidth: 3,
     fillStyle: "yellow",
-    x: 160,
-    y: 160,
+    x: 210,
+    y: 230,
     width: 200,
     height: 150,
     click: function(layer) {
@@ -132,8 +132,8 @@ $("canvas")
     strokeStyle: "#000",
     strokeWidth: 3,
     fillStyle: "yellow",
-    x: 110,
-    y: 80,
+    x: 160,
+    y: 150,
     width: 120,
     height: 120,
     click: function(layer) {
@@ -153,10 +153,10 @@ $("canvas")
     strokeStyle: "black",
     strokeWidth: 5,
     fillStyle: "white",
-    x: 70,
-    y: 70,
-    width: 15,
-    height: 15
+    x: 120,
+    y: 140,
+    width: 14,
+    height: 18
   })
   .drawEllipse({
     layer: true,
@@ -164,10 +164,10 @@ $("canvas")
     strokeStyle: "black",
     strokeWidth: 5,
     fillStyle: "white",
-    x: 120,
-    y: 70,
-    width: 15,
-    height: 15
+    x: 170,
+    y: 140,
+    width: 14,
+    height: 18
   })
   .drawPath({
     layer: true,
@@ -187,25 +187,25 @@ $("canvas")
     },
     p1: {
       type: "bezier",
-      x1: 65,
-      y1: 90, // Start point
-      cx1: 105,
-      cy1: 30, // Control point
-      cx2: 90,
-      cy2: 90, // Control point
-      x2: 125,
-      y2: 90 // Start/end point
+      x1: 115,
+      y1: 160, // Start point
+      cx1: 155,
+      cy1: 100, // Control point
+      cx2: 140,
+      cy2: 160, // Control point
+      x2: 175,
+      y2: 160 // Start/end point
     },
     p2: {
       type: "bezier",
-      x1: 65,
-      y1: 90,
-      cx1: 0,
-      cy1: 120,
-      cx2: 45,
-      cy2: 150,
-      x2: 125,
-      y2: 90
+      x1: 115,
+      y1: 160,
+      cx1: 50,
+      cy1: 190,
+      cx2: 95,
+      cy2: 220,
+      x2: 175,
+      y2: 160
     }
   });
 
@@ -219,4 +219,18 @@ $("#body_test").on("click", function() {
 
 $("#bill_test").on("click", function() {
   alert("Quack! My bill is " + billColor);
+});
+
+$("#download").on("click", function() {
+  $("canvas").getCanvasImage();
+  console.log("Download");
+});
+
+$("#addhat").on("click", function() {
+  $("canvas").drawImage({
+    layer: true,
+    source: "./hats/hattest.svg",
+    x: 155,
+    y: 70
+  });
 });
