@@ -1,20 +1,16 @@
 // This demo will work on iOS, Android, and desktop browsers
 // Draw the outline of an unclosed path (ie a duck part), click to apply a random color from the array
-var headColor = "yellow";
-var bodyColor = "yellow";
-var billColor = "orange";
-var hatOn = false;
 
 $("#head_test").on("click", function() {
-  alert("Quack! My head is " + headColor);
+  alert("Quack! My head is " + duckAttrs.headColor);
 });
 
 $("#body_test").on("click", function() {
-  alert("Quack! My body is " + bodyColor);
+  alert("Quack! My body is " + duckAttrs.bodyColor);
 });
 
 $("#bill_test").on("click", function() {
-  alert("Quack! My bill is " + billColor);
+  alert("Quack! My bill is " + duckAttrs.billColor);
 });
 
 $("#download").on("click", function() {
@@ -22,12 +18,19 @@ $("#download").on("click", function() {
   console.log("Download");
 });
 
+var duckAttrs = {
+  headColor: "yellow",
+  bodyColor: "yellow",
+  billColor: "orange",
+  hatOn: false
+};
+
 $("#addhat").on("click", function() {
-  if (hatOn) {
-    $("canvas")
+  if (duckAttrs.hatOn) {
+    $("#canvas1")
       .removeLayer("hat")
       .drawLayers();
-    hatOn = false;
+    duckAttrs.hatOn = false;
   } else {
     $("#canvas1").drawImage({
       name: "hat",
@@ -37,11 +40,11 @@ $("#addhat").on("click", function() {
       shadowBlur: 15,
       shadowX: 0,
       shadowY: 5,
-      source: "./hats/l3helmet.svg",
-      x: 160,
-      y: 140
+      source: "./duck/accessories/hattest.svg",
+      x: 200,
+      y: 200
     });
-    hatOn = true;
+    duckAttrs.hatOn = true;
   }
 });
 
@@ -68,8 +71,23 @@ $("#canvas1")
         },
         0
       );
-      bodyColor = $("#color").val();
+      duckAttrs.bodyColor = $("#color").val();
     }
+  })
+  .drawBezier({
+    layer: true,
+    name: "wing",
+    strokeStyle: "rgb(0,0,0, 0.3)",
+    fillStyle: "rgb(0,0,0, 0.03)",
+    strokeWidth: 3,
+    x1: 205,
+    y1: 280,
+    cx1: 225,
+    cy1: 310,
+    cx2: 375,
+    cy2: 210,
+    x2: 205,
+    y2: 240
   })
   .drawEllipse({
     layer: true,
@@ -93,7 +111,7 @@ $("#canvas1")
         },
         0
       );
-      headColor = $("#color").val();
+      duckAttrs.headColor = $("#color").val();
     }
   })
   .drawEllipse({
@@ -136,7 +154,7 @@ $("#canvas1")
         },
         0
       );
-      billColor = $("#color").val();
+      duckAttrs.billColor = $("#color").val();
     },
     p1: {
       type: "bezier",

@@ -4,20 +4,6 @@ var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $exampleList = $("#example-list");
 
-$(document).ready(function() {
-  var obj = document.createElement("audio");
-  obj.src = "./42941__agfx__squeeky-ball-toy-10-l.wav";
-  obj.volume = 0.1;
-  obj.autoPlay = false;
-  obj.preLoad = true;
-  obj.controls = true;
-
-  $("#squeeze").click(function() {
-    obj.play();
-    // obj.pause();
-  });
-});
-
 // The API object contains methods for each kind of request we'll make
 var API = {
   saveExample: function(example) {
