@@ -16,11 +16,14 @@ $(document).ready(function() {
 //Refresh the image and remove the tips balloon. Removing tips ballon seems slow?
 $("#refresh").on("click", function() {
   $("#canvas2").removeLayerGroup("tips");
+  $("canvas").drawLayers();
   drawDuck();
 });
 
 //Squeeze the duck to perform an animation. Depresses and returns slightly slower, like rubber.
 function squeeze() {
+  $("canvas").removeLayerGroup("tips");
+
   $("#canvas2")
     .animateLayerGroup(
       "duck",
@@ -88,4 +91,19 @@ function squeeze() {
       y: 90,
       maxWidth: 290
     });
+  clearBalloon();
+}
+function clearBalloon() {
+  var bclear = function() {
+    $("canvas").removeLayer("balloon");
+    $("canvas").drawLayers();
+    $("canvas").animateLayerGroup(
+      "tips",
+      {
+        fillStyle: "rgb(255, 255, 255, 0)"
+      },
+      0
+    );
+  };
+  setTimeout(bclear, 2000);
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 $("#head_test").on("click", function() {
   alert("Quack! My head is " + duckAttrs.headStyle);
 });
@@ -15,16 +16,74 @@ $("#download").on("click", function() {
   console.log("Download");
 });
 
-var duckAttrs = {
-  headStyle: "yellow",
-  bodyStyle: "yellow",
-  billStyle: "orange",
-  hatOn: false
-};
-
 $("#addhat").on("click", function() {
-  drawHat();
+  hatButton();
 });
+
+var hatOn = false;
+
+var colGradPat = {
+  head: {
+    color: "yellow",
+    pattern: function(layer) {
+      return $(this).createPattern({
+        source: "./duck/patterns/greencamo.jpg",
+        repeat: "repeat"
+      });
+    },
+    gradient: function(layer) {
+      return $(this).createGradient({
+        // Gradient is drawn relative to layer position
+        x1: 0,
+        y1: layer.y - layer.height,
+        x2: 0,
+        y2: layer.y + layer.height,
+        c1: "blue",
+        c2: "yellow"
+      });
+    }
+  },
+  body: {
+    color: "yellow",
+    pattern: function(layer) {
+      return $(this).createPattern({
+        source: "./duck/patterns/greencamo.jpg",
+        repeat: "repeat"
+      });
+    },
+    gradient: function(layer) {
+      return $(this).createGradient({
+        // Gradient is drawn relative to layer position
+        x1: 0,
+        y1: layer.y - layer.height,
+        x2: 0,
+        y2: layer.y + layer.height,
+        c1: "blue",
+        c2: "yellow"
+      });
+    }
+  },
+  bill: {
+    color: "orange",
+    pattern: function(layer) {
+      return $(this).createPattern({
+        source: "./duck/patterns/greencamo.jpg",
+        repeat: "repeat"
+      });
+    },
+    gradient: function(layer) {
+      return $(this).createGradient({
+        // Gradient is drawn relative to layer position
+        x1: 0,
+        y1: layer.y - layer.height,
+        x2: 0,
+        y2: layer.y + layer.height,
+        c1: "blue",
+        c2: "yellow"
+      });
+    }
+  }
+};
 
 function drawBody() {
   $("canvas").removeLayerGroup("body");
@@ -37,7 +96,7 @@ function drawBody() {
       index: 0,
       strokeStyle: "#000",
       strokeWidth: 3,
-      fillStyle: duckAttrs.bodyStyle,
+      fillStyle: colGradPat.body.color,
       shadowColor: "rgb(0, 0, 0, 0.5)",
       shadowBlur: 15,
       shadowX: 4,
@@ -52,8 +111,8 @@ function drawBody() {
       name: "wing",
       groups: ["body", "beziers"],
       index: 1,
-      strokeStyle: "rgb(0,0,0, 0.3)",
-      fillStyle: "rgb(0,0,0, 0.03)",
+      strokeStyle: "rgb(0,0,0, 0.5)",
+      fillStyle: "rgb(0,0,0, 0.04)",
       strokeWidth: 3,
       x1: 205,
       y1: 280,
@@ -77,7 +136,7 @@ function drawHead() {
       index: 3,
       strokeStyle: "#000",
       strokeWidth: 3,
-      fillStyle: duckAttrs.headStyle,
+      fillStyle: colGradPat.head.color,
       shadowColor: "rgb(0, 0, 0, 0.3)",
       shadowBlur: 15,
       shadowX: 0,
@@ -125,7 +184,7 @@ function drawBill() {
     index: 4,
     strokeStyle: "#000",
     strokeWidth: 3,
-    fillStyle: duckAttrs.billStyle,
+    fillStyle: colGradPat.bill.color,
     shadowColor: "rgb(0, 0, 0, 0.2)",
     shadowBlur: 15,
     shadowX: 0,
@@ -160,45 +219,87 @@ function drawDuck() {
   drawBody();
   drawHead();
   drawBill();
+  if (hatOn) {
+    drawHat();
+  }
 }
 
 function drawHat() {
-  if (duckAttrs.hatOn) {
+  $("canvas").removeLayer("hat");
+  drawBill();
+  $("canvas").drawImage({
+    name: "hat",
+    groups: ["duck"],
+    imageSmoothing: true,
+    layer: true,
+    index: 10,
+    shadowColor: "rgb(0, 0, 0, 0.3)",
+    shadowBlur: 15,
+    shadowX: 0,
+    shadowY: 5,
+    source: "./duck/accessories/l3helmet.svg",
+    x: 200,
+    y: 200
+  });
+}
+
+function hatButton() {
+  if (hatOn) {
     $("canvas").removeLayer("hat");
-    duckAttrs.hatOn = false;
+    $("canvas").drawLayers();
+    hatOn = false;
   } else {
-    duckAttrs.hatOn = true;
-    $("canvas").removeLayer("hat");
-    $("canvas").drawImage({
-      name: "hat",
-      groups: ["duck"],
-      layer: true,
-      index: 10,
-      shadowColor: "rgb(0, 0, 0, 0.3)",
-      shadowBlur: 15,
-      shadowX: 0,
-      shadowY: 5,
-      source: "./duck/accessories/hattest.svg",
-      x: 200,
-      y: 200
-    });
+    hatOn = true;
+    drawHat();
   }
 }
 
 drawDuck();
 
 $("#head_color").change(function() {
-  duckAttrs.headStyle = $("#head_color").val();
+  $("canvas").setLayer("head", {
+    fillStyle: colGradPat.head.color
+  });
+  colGradPat.head.color = $("#head_color").val();
   drawHead();
   drawBill();
+  if (hatOn) {
+    drawHat();
+  }
 });
 $("#bill_color").change(function() {
-  duckAttrs.billStyle = $("#bill_color").val();
+  $("canvas").setLayer("bill", {
+    fillStyle: colGradPat.bill.color
+  });
+  colGradPat.bill.color = $("#bill_color").val();
   drawBill();
+  if (hatOn) {
+    drawHat();
+  }
 });
 $("#body_color").change(function() {
-  duckAttrs.bodyStyle = $("#body_color").val();
+  $("canvas").setLayer("body", {
+    fillStyle: colGradPat.body.color
+  });
+  colGradPat.body.color = $("#body_color").val();
   drawBody();
   drawHead();
   drawBill();
+  if (hatOn) {
+    drawHat();
+  }
+});
+
+$("#grad_test").on("click", function() {
+  $("canvas").setLayer("head", {
+    fillStyle: colGradPat.head.gradient
+  });
+  drawLayers();
+});
+
+$("#patt_test").on("click", function() {
+  $("canvas").setLayer("body", {
+    fillStyle: colGradPat.body.pattern
+  });
+  drawLayers();
 });
