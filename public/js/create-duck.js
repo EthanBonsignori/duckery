@@ -1,16 +1,13 @@
-// This demo will work on iOS, Android, and desktop browsers
-// Draw the outline of an unclosed path (ie a duck part), click to apply a random color from the array
-
 $("#head_test").on("click", function() {
-  alert("Quack! My head is " + duckAttrs.headColor);
+  alert("Quack! My head is " + duckAttrs.headStyle);
 });
 
 $("#body_test").on("click", function() {
-  alert("Quack! My body is " + duckAttrs.bodyColor);
+  alert("Quack! My body is " + duckAttrs.bodyStyle);
 });
 
 $("#bill_test").on("click", function() {
-  alert("Quack! My bill is " + duckAttrs.billColor);
+  alert("Quack! My bill is " + duckAttrs.billStyle);
 });
 
 $("#download").on("click", function() {
@@ -19,143 +16,120 @@ $("#download").on("click", function() {
 });
 
 var duckAttrs = {
-  headColor: "yellow",
-  bodyColor: "yellow",
-  billColor: "orange",
+  headStyle: "yellow",
+  bodyStyle: "yellow",
+  billStyle: "orange",
   hatOn: false
 };
 
 $("#addhat").on("click", function() {
-  if (duckAttrs.hatOn) {
-    $("#canvas1")
-      .removeLayer("hat")
-      .drawLayers();
-    duckAttrs.hatOn = false;
-  } else {
-    $("#canvas1").drawImage({
-      name: "hat",
-      groups: ["duck"],
+  drawHat();
+});
+
+function drawBody() {
+  $("canvas").removeLayerGroup("body");
+
+  $("canvas")
+    .drawEllipse({
       layer: true,
+      name: "body",
+      groups: ["body", "duck"],
+      index: 0,
+      strokeStyle: "#000",
+      strokeWidth: 3,
+      fillStyle: duckAttrs.bodyStyle,
+      shadowColor: "rgb(0, 0, 0, 0.5)",
+      shadowBlur: 15,
+      shadowX: 4,
+      shadowY: 10,
+      x: 210,
+      y: 230,
+      width: 200,
+      height: 150
+    })
+    .drawBezier({
+      layer: true,
+      name: "wing",
+      groups: ["body", "beziers"],
+      index: 1,
+      strokeStyle: "rgb(0,0,0, 0.3)",
+      fillStyle: "rgb(0,0,0, 0.03)",
+      strokeWidth: 3,
+      x1: 205,
+      y1: 280,
+      cx1: 225,
+      cy1: 310,
+      cx2: 375,
+      cy2: 210,
+      x2: 205,
+      y2: 240
+    });
+}
+
+function drawHead() {
+  $("canvas").removeLayerGroup("head");
+
+  $("canvas")
+    .drawEllipse({
+      layer: true,
+      name: "head",
+      groups: ["head", "duck"],
+      index: 3,
+      strokeStyle: "#000",
+      strokeWidth: 3,
+      fillStyle: duckAttrs.headStyle,
       shadowColor: "rgb(0, 0, 0, 0.3)",
       shadowBlur: 15,
       shadowX: 0,
       shadowY: 5,
-      source: "./duck/accessories/hattest.svg",
-      x: 200,
-      y: 200
+      x: 160,
+      y: 150,
+      width: 120,
+      height: 120
+    })
+    .drawEllipse({
+      layer: true,
+      name: "lefteye",
+      groups: ["head", "duck"],
+      index: 9,
+      strokeStyle: "black",
+      strokeWidth: 5,
+      fillStyle: "white",
+      x: 110,
+      y: 140,
+      width: 14,
+      height: 18
+    })
+    .drawEllipse({
+      layer: true,
+      name: "righteye",
+      groups: ["head", "duck"],
+      index: 9,
+      strokeStyle: "black",
+      strokeWidth: 5,
+      fillStyle: "white",
+      x: 170,
+      y: 140,
+      width: 14,
+      height: 18
     });
-    duckAttrs.hatOn = true;
-  }
-});
+}
 
-$("#canvas1")
-  .drawEllipse({
-    layer: true,
-    name: "body",
-    strokeStyle: "#000",
-    strokeWidth: 3,
-    fillStyle: "yellow",
-    shadowColor: "rgb(0, 0, 0, 0.5)",
-    shadowBlur: 15,
-    shadowX: 4,
-    shadowY: 10,
-    x: 210,
-    y: 230,
-    width: 200,
-    height: 150,
-    click: function(layer) {
-      $(this).animateLayer(
-        layer,
-        {
-          fillStyle: $("#color").val()
-        },
-        0
-      );
-      duckAttrs.bodyColor = $("#color").val();
-    }
-  })
-  .drawBezier({
-    layer: true,
-    name: "wing",
-    strokeStyle: "rgb(0,0,0, 0.3)",
-    fillStyle: "rgb(0,0,0, 0.03)",
-    strokeWidth: 3,
-    x1: 205,
-    y1: 280,
-    cx1: 225,
-    cy1: 310,
-    cx2: 375,
-    cy2: 210,
-    x2: 205,
-    y2: 240
-  })
-  .drawEllipse({
-    layer: true,
-    name: "head",
-    strokeStyle: "#000",
-    strokeWidth: 3,
-    fillStyle: "yellow",
-    shadowColor: "rgb(0, 0, 0, 0.3)",
-    shadowBlur: 15,
-    shadowX: 0,
-    shadowY: 5,
-    x: 160,
-    y: 150,
-    width: 120,
-    height: 120,
-    click: function(layer) {
-      $(this).animateLayer(
-        layer,
-        {
-          fillStyle: $("#color").val()
-        },
-        0
-      );
-      duckAttrs.headColor = $("#color").val();
-    }
-  })
-  .drawEllipse({
-    layer: true,
-    name: "lefteye",
-    strokeStyle: "black",
-    strokeWidth: 5,
-    fillStyle: "white",
-    x: 120,
-    y: 140,
-    width: 14,
-    height: 18
-  })
-  .drawEllipse({
-    layer: true,
-    name: "righteye",
-    strokeStyle: "black",
-    strokeWidth: 5,
-    fillStyle: "white",
-    x: 170,
-    y: 140,
-    width: 14,
-    height: 18
-  })
-  .drawPath({
+function drawBill() {
+  $("canvas").removeLayer("bill");
+
+  $("canvas").drawPath({
     layer: true,
     name: "bill",
+    groups: ["beziers"],
+    index: 4,
     strokeStyle: "#000",
     strokeWidth: 3,
-    fillStyle: "orange",
+    fillStyle: duckAttrs.billStyle,
     shadowColor: "rgb(0, 0, 0, 0.2)",
     shadowBlur: 15,
     shadowX: 0,
     shadowY: 3,
-    click: function(layer) {
-      $(this).animateLayer(
-        layer,
-        {
-          fillStyle: $("#color").val()
-        },
-        0
-      );
-      duckAttrs.billColor = $("#color").val();
-    },
     p1: {
       type: "bezier",
       x1: 115,
@@ -179,3 +153,52 @@ $("#canvas1")
       y2: 160
     }
   });
+}
+
+function drawDuck() {
+  $("canvas").clearCanvas();
+  drawBody();
+  drawHead();
+  drawBill();
+}
+
+function drawHat() {
+  if (duckAttrs.hatOn) {
+    $("canvas").removeLayer("hat");
+    duckAttrs.hatOn = false;
+  } else {
+    duckAttrs.hatOn = true;
+    $("canvas").removeLayer("hat");
+    $("canvas").drawImage({
+      name: "hat",
+      groups: ["duck"],
+      layer: true,
+      index: 10,
+      shadowColor: "rgb(0, 0, 0, 0.3)",
+      shadowBlur: 15,
+      shadowX: 0,
+      shadowY: 5,
+      source: "./duck/accessories/hattest.svg",
+      x: 200,
+      y: 200
+    });
+  }
+}
+
+drawDuck();
+
+$("#head_color").change(function() {
+  duckAttrs.headStyle = $("#head_color").val();
+  drawHead();
+  drawBill();
+});
+$("#bill_color").change(function() {
+  duckAttrs.billStyle = $("#bill_color").val();
+  drawBill();
+});
+$("#body_color").change(function() {
+  duckAttrs.bodyStyle = $("#body_color").val();
+  drawBody();
+  drawHead();
+  drawBill();
+});

@@ -1,45 +1,36 @@
 <div id="home">
   <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Examples:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
-        <canvas id="canvas1" width="400" height="400"></canvas><br>
+        <canvas id="canvas1" width="400" height="400"></canvas>
+        <br>
+
         <btn class="btn btn-primary" id="head_test">Click to Get Head Color</btn>
         <btn class="btn btn-primary" id="body_test">Click to Get Body Color</btn>
         <btn class="btn btn-primary" id="bill_test">Click to Get Bill Color</btn>
         <br>
+
         <btn class="btn btn-primary" id="addhat">Click to Toggle Hat</btn>
         <br>
+
         <btn class="btn btn-primary" id="download">Download JPG</btn>
+
         <div>
-          <input type="color" id="color"
-                value="#ffff00">
-          <label for="color">Color</label>
+          <input type="color" id="head_color"
+            value="#ffff00">
+          <label for="color">Head Color</label>
+
+          <input type="color" id="bill_color"
+            value="#ffff00">
+          <label for="color">Bill Color</label>
+
+          <input type="color" id="body_color"
+            value="#ffff00">
+          <label for="color">Body Color</label>
         </div>
 
-        <btn class="btn btn-primary" id="refresh">Render/Refresh</btn>
-        <canvas id="canvas2" width="700" height="400"></canvas><br>
+        <btn class="btn btn-primary" id="refresh">Render/Refresh</btn><br>
+
+        <canvas id="canvas2" width="700" height="400"></canvas>
+        <br>
 
       </div>
     </div>
