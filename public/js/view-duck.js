@@ -15,12 +15,15 @@ $(document).ready(function() {
 
 //Refresh the image and remove the tips balloon. Removing tips ballon seems slow?
 
-$.get('api/ducks', function(data) {
-  var result = data[10];
+$.get('api/ducks/:id', function(data) {
+  var result = data;
   if (result.gradient) {
+    var gradresult = result.gradient.split(',');
+    gradsrc.c1 = gradresult[0];
+    gradsrc.c2 = gradresult[1];
     $('canvas').setLayer('head', {
       // eslint-disable-next-line quotes
-      fillStyle: JSON.parse(result.gradient).replace(/'/g, '"')
+      fillStyle: grad
     });
   } else {
     $('canvas').setLayer('head', {
@@ -33,8 +36,9 @@ $.get('api/ducks', function(data) {
   });
 
   if (result.pattern) {
+    patsrc = result.pattern;
     $('canvas').setLayer('body', {
-      fillStyle: JSON.parse(result.pattern).replace(/'/g, '"')
+      fillStyle: pat
     });
   } else {
     $('canvas').setLayer('body', {

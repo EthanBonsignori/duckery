@@ -30,7 +30,7 @@ var gradsrc = {
   c1: 'red',
   c2: 'white'
 };
-var grad = function(layer) {
+const grad = function(layer) {
   return $(this).createGradient({
     // Gradient is drawn relative to layer position
     x1: 0,
@@ -44,7 +44,7 @@ var grad = function(layer) {
 
 var patsrc = 'tartan.png';
 // eslint-disable-next-line no-unused-vars
-var pat = function(layer) {
+const pat = function(layer) {
   return $(this).createPattern({
     source: './duck/patterns/' + patsrc,
     repeat: 'repeat'
@@ -266,6 +266,8 @@ $('#body_color').change(function() {
 });
 
 $('#grad_test').on('click', function() {
+  gradsrc.c1 = $('#c1_color').val();
+  gradsrc.c2 = $('#c2_color').val();
   changeStyle('head', colGradPat.head.gradient, colGradPat.head.gradient);
   gradientOn = true;
 });
@@ -273,4 +275,9 @@ $('#grad_test').on('click', function() {
 $('#patt_test').on('click', function() {
   changeStyle('body', colGradPat.body.pattern, colGradPat.body.pattern);
   patternOn = true;
+});
+
+$('.pattern').on('click', function() {
+  patRaw = $(this).attr('src');
+  patsrc = patRaw.replace('./duck/patterns/', '');
 });

@@ -4,6 +4,8 @@ module.exports = function(sequelize, DataTypes) {
     body: DataTypes.TEXT,
     bill: DataTypes.TEXT,
     hat: DataTypes.TEXT,
+    gradient: DataTypes.TEXT,
+    pattern: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   });

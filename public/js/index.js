@@ -52,22 +52,38 @@ var refreshExamples = function() {
   });
 }; */
 
+//Check if the fillStyle is a function (so the parameters for the function can be passed)
+//or a solid color (so the hex value can be passed)
+function funcStyleCheck(toCheck, checkLayer) {
+  if (typeof toCheck === 'function') {
+    if (toCheck === grad) {
+      return 'grad';
+    }
+
+    if (toCheck === pat) {
+      return 'pat';
+    }
+  } else {
+    return $('canvas').getLayer(checkLayer).fillStyle;
+  }
+}
+
 // handleFormSubmit is called whenever we submit a new example
 // Save the new example to the db and refresh the list
 var handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var $head = String($('canvas').getLayer('head').fillStyle);
-  var $bill = String($('canvas').getLayer('bill').fillStyle);
-  var $body = String($('canvas').getLayer('body').fillStyle);
+  var $head = funcStyleCheck($('canvas').getLayer('head').fillStyle, 'head');
+  var $bill = funcStyleCheck($('canvas').getLayer('bill').fillStyle, 'bill');
+  var $body = funcStyleCheck($('canvas').getLayer('body').fillStyle, 'body');
   if (hatOn) {
     var $hat = $('canvas').getLayer('hat').source;
   }
   if (gradientOn) {
-    var $gradient = JSON.stringify($('canvas').getLayer('head').fillStyle);
+    var $gradient = gradsrc.c1 + ',' + gradsrc.c2;
   }
   if (gradientOn) {
-    var $pattern = JSON.stringify($('canvas').getLayer('body').fillStyle);
+    var $pattern = patsrc;
   }
 
   var duck = {
