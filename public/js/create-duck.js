@@ -1,103 +1,87 @@
-/* eslint-disable no-unused-vars */
-$("#head_test").on("click", function() {
-  alert("Quack! My head is " + duckAttrs.headStyle);
+// eslint-disable-next-line no-unused-vars
+var gradientOn = false;
+// eslint-disable-next-line no-unused-vars
+var patternOn = false;
+
+$('#head_test').on('click', function() {
+  alert('Quack! My head is ' + colGradPat.head.color);
 });
 
-$("#body_test").on("click", function() {
-  alert("Quack! My body is " + duckAttrs.bodyStyle);
+$('#body_test').on('click', function() {
+  alert('Quack! My body is ' + colGradPat.body.color);
 });
 
-$("#bill_test").on("click", function() {
-  alert("Quack! My bill is " + duckAttrs.billStyle);
+$('#bill_test').on('click', function() {
+  alert('Quack! My bill is ' + colGradPat.bill.color);
 });
 
-$("#download").on("click", function() {
-  $("canvas").getCanvasImage();
-  console.log("Download");
+$('#download').on('click', function() {
+  $('canvas').getCanvasImage();
+  console.log('Download');
 });
 
-$("#addhat").on("click", function() {
+$('#addhat').on('click', function() {
   hatButton();
 });
 
 var hatOn = false;
 
+var gradsrc = {
+  c1: 'red',
+  c2: 'white'
+};
+var grad = function(layer) {
+  return $(this).createGradient({
+    // Gradient is drawn relative to layer position
+    x1: 0,
+    y1: layer.y - layer.height,
+    x2: 0,
+    y2: layer.y + layer.height,
+    c1: gradsrc.c1,
+    c2: gradsrc.c2
+  });
+};
+
+var patsrc = 'tartan.png';
+// eslint-disable-next-line no-unused-vars
+var pat = function(layer) {
+  return $(this).createPattern({
+    source: './duck/patterns/' + patsrc,
+    repeat: 'repeat'
+  });
+};
+
 var colGradPat = {
   head: {
-    color: "yellow",
-    pattern: function(layer) {
-      return $(this).createPattern({
-        source: "./duck/patterns/greencamo.jpg",
-        repeat: "repeat"
-      });
-    },
-    gradient: function(layer) {
-      return $(this).createGradient({
-        // Gradient is drawn relative to layer position
-        x1: 0,
-        y1: layer.y - layer.height,
-        x2: 0,
-        y2: layer.y + layer.height,
-        c1: "blue",
-        c2: "yellow"
-      });
-    }
+    color: 'yellow',
+    pattern: pat,
+    gradient: grad
   },
   body: {
-    color: "yellow",
-    pattern: function(layer) {
-      return $(this).createPattern({
-        source: "./duck/patterns/greencamo.jpg",
-        repeat: "repeat"
-      });
-    },
-    gradient: function(layer) {
-      return $(this).createGradient({
-        // Gradient is drawn relative to layer position
-        x1: 0,
-        y1: layer.y - layer.height,
-        x2: 0,
-        y2: layer.y + layer.height,
-        c1: "blue",
-        c2: "yellow"
-      });
-    }
+    color: '#ffff00',
+    pattern: pat,
+    gradient: grad
   },
   bill: {
-    color: "orange",
-    pattern: function(layer) {
-      return $(this).createPattern({
-        source: "./duck/patterns/greencamo.jpg",
-        repeat: "repeat"
-      });
-    },
-    gradient: function(layer) {
-      return $(this).createGradient({
-        // Gradient is drawn relative to layer position
-        x1: 0,
-        y1: layer.y - layer.height,
-        x2: 0,
-        y2: layer.y + layer.height,
-        c1: "blue",
-        c2: "yellow"
-      });
-    }
+    color: 'orange',
+    pattern: pat,
+    gradient: grad
   }
 };
 
 function drawBody() {
-  $("canvas").removeLayerGroup("body");
+  $('canvas').removeLayerGroup('body');
 
-  $("canvas")
+  $('canvas')
     .drawEllipse({
       layer: true,
-      name: "body",
-      groups: ["body", "duck"],
+      name: 'body',
+      groups: ['body', 'duck'],
       index: 0,
-      strokeStyle: "#000",
+      strokeStyle: '#000',
       strokeWidth: 3,
       fillStyle: colGradPat.body.color,
-      shadowColor: "rgb(0, 0, 0, 0.5)",
+      shadowColor: 'rgb(0, 0, 0, 0.5)',
       shadowBlur: 15,
       shadowX: 4,
       shadowY: 10,
@@ -108,11 +92,11 @@ function drawBody() {
     })
     .drawBezier({
       layer: true,
-      name: "wing",
-      groups: ["body", "beziers"],
+      name: 'wing',
+      groups: ['body', 'beziers'],
       index: 1,
-      strokeStyle: "rgb(0,0,0, 0.5)",
-      fillStyle: "rgb(0,0,0, 0.04)",
+      strokeStyle: 'rgb(0,0,0, 0.5)',
+      fillStyle: 'rgb(0,0,0, 0.04)',
       strokeWidth: 3,
       x1: 205,
       y1: 280,
@@ -126,18 +110,18 @@ function drawBody() {
 }
 
 function drawHead() {
-  $("canvas").removeLayerGroup("head");
+  $('canvas').removeLayerGroup('head');
 
-  $("canvas")
+  $('canvas')
     .drawEllipse({
       layer: true,
-      name: "head",
-      groups: ["head", "duck"],
+      name: 'head',
+      groups: ['head', 'duck'],
       index: 3,
-      strokeStyle: "#000",
+      strokeStyle: '#000',
       strokeWidth: 3,
       fillStyle: colGradPat.head.color,
-      shadowColor: "rgb(0, 0, 0, 0.3)",
+      shadowColor: 'rgb(0, 0, 0, 0.3)',
       shadowBlur: 15,
       shadowX: 0,
       shadowY: 5,
@@ -148,12 +132,12 @@ function drawHead() {
     })
     .drawEllipse({
       layer: true,
-      name: "lefteye",
-      groups: ["head", "duck"],
+      name: 'lefteye',
+      groups: ['head', 'duck'],
       index: 9,
-      strokeStyle: "black",
+      strokeStyle: 'black',
       strokeWidth: 5,
-      fillStyle: "white",
+      fillStyle: 'white',
       x: 110,
       y: 140,
       width: 14,
@@ -161,12 +145,12 @@ function drawHead() {
     })
     .drawEllipse({
       layer: true,
-      name: "righteye",
-      groups: ["head", "duck"],
+      name: 'righteye',
+      groups: ['head', 'duck'],
       index: 9,
-      strokeStyle: "black",
+      strokeStyle: 'black',
       strokeWidth: 5,
-      fillStyle: "white",
+      fillStyle: 'white',
       x: 170,
       y: 140,
       width: 14,
@@ -175,22 +159,22 @@ function drawHead() {
 }
 
 function drawBill() {
-  $("canvas").removeLayer("bill");
+  $('canvas').removeLayer('bill');
 
-  $("canvas").drawPath({
+  $('canvas').drawPath({
     layer: true,
-    name: "bill",
-    groups: ["beziers"],
+    name: 'bill',
+    groups: ['beziers'],
     index: 4,
-    strokeStyle: "#000",
+    strokeStyle: '#000',
     strokeWidth: 3,
     fillStyle: colGradPat.bill.color,
-    shadowColor: "rgb(0, 0, 0, 0.2)",
+    shadowColor: 'rgb(0, 0, 0, 0.2)',
     shadowBlur: 15,
     shadowX: 0,
     shadowY: 3,
     p1: {
-      type: "bezier",
+      type: 'bezier',
       x1: 115,
       y1: 160, // Start point
       cx1: 155,
@@ -201,7 +185,7 @@ function drawBill() {
       y2: 160 // Start/end point
     },
     p2: {
-      type: "bezier",
+      type: 'bezier',
       x1: 115,
       y1: 160,
       cx1: 50,
@@ -215,7 +199,7 @@ function drawBill() {
 }
 
 function drawDuck() {
-  $("canvas").clearCanvas();
+  $('canvas').clearCanvas();
   drawBody();
   drawHead();
   drawBill();
@@ -225,19 +209,19 @@ function drawDuck() {
 }
 
 function drawHat() {
-  $("canvas").removeLayer("hat");
-  drawBill();
-  $("canvas").drawImage({
-    name: "hat",
-    groups: ["duck"],
+  $('canvas').removeLayer('hat');
+  $('canvas').drawImage({
+    name: 'hat',
+    groups: ['duck'],
     imageSmoothing: true,
     layer: true,
     index: 10,
-    shadowColor: "rgb(0, 0, 0, 0.3)",
+    load: $('canvas').drawLayers(),
+    shadowColor: 'rgb(0, 0, 0, 0.3)',
     shadowBlur: 15,
     shadowX: 0,
     shadowY: 5,
-    source: "./duck/accessories/l3helmet.svg",
+    source: './duck/accessories/l3helmet.svg',
     x: 200,
     y: 200
   });
@@ -245,8 +229,8 @@ function drawHat() {
 
 function hatButton() {
   if (hatOn) {
-    $("canvas").removeLayer("hat");
-    $("canvas").drawLayers();
+    $('canvas').removeLayer('hat');
+    $('canvas').drawLayers();
     hatOn = false;
   } else {
     hatOn = true;
@@ -256,50 +240,37 @@ function hatButton() {
 
 drawDuck();
 
-$("#head_color").change(function() {
-  $("canvas").setLayer("head", {
-    fillStyle: colGradPat.head.color
+function changeStyle(varlayer, style, val) {
+  style = val;
+  $('canvas').setLayer(varlayer, {
+    fillStyle: style
   });
-  colGradPat.head.color = $("#head_color").val();
-  drawHead();
-  drawBill();
   if (hatOn) {
     drawHat();
   }
-});
-$("#bill_color").change(function() {
-  $("canvas").setLayer("bill", {
-    fillStyle: colGradPat.bill.color
-  });
-  colGradPat.bill.color = $("#bill_color").val();
-  drawBill();
-  if (hatOn) {
-    drawHat();
-  }
-});
-$("#body_color").change(function() {
-  $("canvas").setLayer("body", {
-    fillStyle: colGradPat.body.color
-  });
-  colGradPat.body.color = $("#body_color").val();
-  drawBody();
-  drawHead();
-  drawBill();
-  if (hatOn) {
-    drawHat();
-  }
+  $('canvas').drawLayers();
+}
+
+$('#head_color').change(function() {
+  changeStyle('head', colGradPat.head.color, $('#head_color').val());
+  gradientOn = false;
 });
 
-$("#grad_test").on("click", function() {
-  $("canvas").setLayer("head", {
-    fillStyle: colGradPat.head.gradient
-  });
-  drawLayers();
+$('#bill_color').change(function() {
+  changeStyle('bill', colGradPat.bill.color, $('#bill_color').val());
 });
 
-$("#patt_test").on("click", function() {
-  $("canvas").setLayer("body", {
-    fillStyle: colGradPat.body.pattern
-  });
-  drawLayers();
+$('#body_color').change(function() {
+  changeStyle('body', colGradPat.body.color, $('#body_color').val());
+  patternOn = false;
+});
+
+$('#grad_test').on('click', function() {
+  changeStyle('head', colGradPat.head.gradient, colGradPat.head.gradient);
+  gradientOn = true;
+});
+
+$('#patt_test').on('click', function() {
+  changeStyle('body', colGradPat.body.pattern, colGradPat.body.pattern);
+  patternOn = true;
 });
