@@ -15,8 +15,8 @@ $(document).ready(function() {
 
 //Refresh the image and remove the tips balloon. Removing tips ballon seems slow?
 
-$.get('api/ducks/:id', function(data) {
-  var result = data;
+$.get('api/ducks', function(data) {
+  var result = data[1];
   if (result.gradient) {
     var gradresult = result.gradient.split(',');
     gradsrc.c1 = gradresult[0];
