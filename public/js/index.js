@@ -26,32 +26,6 @@ var API = {
   }
 };
 
-/* // refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $('<a>')
-        .text(example.text)
-        .attr('href', '/ducks/' + example.id);
-
-      var $li = $('<li>')
-        .attr({
-          class: 'list-group-item',
-          'data-id': example.id
-        })
-        .append($a);
-
-      var $button = $('<button>')
-        .addClass('btn btn-danger float-right delete')
-        .text('ｘ');
-
-      $li.append($button);
-
-      return $li;
-    });
-  });
-}; */
-
 //Check if the fillStyle is a function (so the parameters for the function can be passed)
 //or a solid color (so the hex value can be passed)
 function funcStyleCheck(toCheck, checkLayer) {

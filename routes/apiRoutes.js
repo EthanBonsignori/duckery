@@ -8,6 +8,12 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/api/ducks/:id', function(req, res) {
+    db.Duck.find({ where: { id: req.params.id } }).then(function(dbExamples) {
+      res.json(dbExamples);
+    });
+  });
+
   // Create a new example
   app.post('/api/ducks', function(req, res) {
     db.Duck.create(req.body).then(function(dbExample) {

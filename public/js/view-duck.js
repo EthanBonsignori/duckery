@@ -13,12 +13,11 @@ $(document).ready(function() {
   });
 });
 
-//Refresh the image and remove the tips balloon. Removing tips ballon seems slow?
-
-$.get('api/ducks', function(data) {
-  var result = data[1];
-  if (result.gradient) {
-    var gradresult = result.gradient.split(',');
+var id = $('.container').attr('id') || '';
+$.get('/api/ducks/' + id, function(data) {
+  console.log(data);
+  if (data.gradient) {
+    var gradresult = data.gradient.split(',');
     gradsrc.c1 = gradresult[0];
     gradsrc.c2 = gradresult[1];
     $('canvas').setLayer('head', {
@@ -27,28 +26,28 @@ $.get('api/ducks', function(data) {
     });
   } else {
     $('canvas').setLayer('head', {
-      fillStyle: result.head
+      fillStyle: data.head
     });
   }
 
   $('canvas').setLayer('bill', {
-    fillStyle: result.bill
+    fillStyle: data.bill
   });
 
-  if (result.pattern) {
-    patsrc = result.pattern;
+  if (data.pattern) {
+    patsrc = data.pattern;
     $('canvas').setLayer('body', {
       fillStyle: pat
     });
   } else {
     $('canvas').setLayer('body', {
-      fillStyle: result.body
+      fillStyle: data.body
     });
   }
 
-  if (result.hat) {
+  if (data.hat) {
     $('canvas').setLayer('hat', {
-      source: result.hat
+      source: data.hat
     });
     drawHat();
   }
@@ -128,6 +127,7 @@ function squeeze() {
     });
   clearBalloon();
 }
+
 function clearBalloon() {
   var bclear = function() {
     $('canvas').removeLayer('balloon');
