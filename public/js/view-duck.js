@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$('document').ready(function() {
   const obj = document.createElement('audio');
   obj.src = './sound/squeak.wav';
-  obj.volume = 0.1;
+  obj.volume = 0.2;
   obj.autoPlay = false;
   obj.preLoad = true;
   obj.controls = true;
@@ -11,54 +11,58 @@ $(document).ready(function() {
     squeeze();
     obj.play();
   });
-});
 
-var id = $('.container').attr('id') || '';
-$.get('/api/ducks/' + id, function(data) {
-  console.log(data);
-  if (data.gradient) {
-    var gradresult = data.gradient.split(',');
-    gradsrc.c1 = gradresult[0];
-    gradsrc.c2 = gradresult[1];
-    $('canvas').setLayer('head', {
-      // eslint-disable-next-line quotes
-      fillStyle: grad
-    });
-  } else {
-    $('canvas').setLayer('head', {
-      fillStyle: data.head
-    });
-  }
-
-  $('canvas').setLayer('bill', {
-    fillStyle: data.bill
-  });
-
-  if (data.pattern) {
-    patsrc = data.pattern;
-    $('canvas').setLayer('body', {
-      fillStyle: pat
-    });
-  } else {
-    $('canvas').setLayer('body', {
-      fillStyle: data.body
-    });
-  }
-
-  if (data.hat) {
-    $('canvas').setLayer('hat', {
-      source: data.hat
-    });
-    drawHat();
-  }
-  $('canvas').drawLayers();
+  setTimeout(getDuck, drawDuck, 1000);
 });
 
 //Squeeze the duck to perform an animation. Depresses and returns slightly slower, like rubber.
+var id = $('.container').attr('id') || '';
+function getDuck() {
+  $.get('/api/ducks/' + id, function(data) {
+    console.log(data);
+    if (data.gradient) {
+      var gradresult = data.gradient.split(',');
+      gradsrc.c1 = gradresult[0];
+      gradsrc.c2 = gradresult[1];
+      $('canvas').setLayer('head', {
+        // eslint-disable-next-line quotes
+        fillStyle: grad
+      });
+    } else {
+      $('canvas').setLayer('head', {
+        fillStyle: data.head
+      });
+    }
+
+    $('canvas').setLayer('bill', {
+      fillStyle: data.bill
+    });
+
+    if (data.pattern) {
+      patsrc = data.pattern;
+      $('canvas').setLayer('body', {
+        fillStyle: pat
+      });
+    } else {
+      $('canvas').setLayer('body', {
+        fillStyle: data.body
+      });
+    }
+
+    if (data.hat) {
+      $('canvas').setLayer('hat', {
+        source: data.hat
+      });
+      drawHat();
+    }
+    $('canvas').drawLayers();
+  });
+}
+
 function squeeze() {
   $('canvas').removeLayerGroup('tips');
 
-  $('#canvas2')
+  $('canvas')
     .animateLayerGroup(
       'duck',
       {
