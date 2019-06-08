@@ -1,63 +1,62 @@
 $('document').ready(function() {
+  console.log('document ready');
   const obj = document.createElement('audio');
-  obj.src = './sound/squeak.wav';
+  obj.src = '../sound/squeak.wav';
   obj.volume = 0.2;
   obj.autoPlay = false;
   obj.preLoad = true;
   obj.controls = true;
 
   //Plays squeeze animation and sound
-  $('#canvas2').on('click', function() {
+  $('canvas').on('click', function() {
     squeeze();
     obj.play();
   });
-
-  setTimeout(getDuck, drawDuck, 1000);
 });
 
 //Squeeze the duck to perform an animation. Depresses and returns slightly slower, like rubber.
-var id = $('.container').attr('id') || '';
-function getDuck() {
-  $.get('/api/ducks/' + id, function(data) {
-    console.log(data);
-    if (data.gradient) {
-      var gradresult = data.gradient.split(',');
-      gradsrc.c1 = gradresult[0];
-      gradsrc.c2 = gradresult[1];
-      $('canvas').setLayer('head', {
-        // eslint-disable-next-line quotes
-        fillStyle: grad
-      });
-    } else {
-      $('canvas').setLayer('head', {
-        fillStyle: data.head
-      });
-    }
-
-    $('canvas').setLayer('bill', {
-      fillStyle: data.bill
+API.getDucks().then(function(data) {
+  var id = $('canvas').attr('id') || '';
+  var data = data[id];
+  if (data.gradient) {
+    alert('this is a gradient');
+    var gradresult = data.gradient.split(',');
+    gradsrc.c1 = gradresult[0];
+    gradsrc.c2 = gradresult[1];
+    $('canvas').setLayer('head', {
+      // eslint-disable-next-line quotes
+      fillStyle: grad
     });
+  } else {
+    alert('no gradient');
+    $('canvas').setLayer('head', {
+      fillStyle: data.head
+    });
+  }
 
-    if (data.pattern) {
-      patsrc = data.pattern;
-      $('canvas').setLayer('body', {
-        fillStyle: pat
-      });
-    } else {
-      $('canvas').setLayer('body', {
-        fillStyle: data.body
-      });
-    }
-
-    if (data.hat) {
-      $('canvas').setLayer('hat', {
-        source: data.hat
-      });
-      drawHat();
-    }
-    $('canvas').drawLayers();
+  $('canvas').setLayer('bill', {
+    fillStyle: data.bill
   });
-}
+
+  if (data.pattern) {
+    patsrc = data.pattern;
+    $('canvas').setLayer('body', {
+      fillStyle: pat
+    });
+  } else {
+    $('canvas').setLayer('body', {
+      fillStyle: data.body
+    });
+  }
+
+  if (data.hat) {
+    hatsrc = data.hat;
+    $('canvas').setLayer('hat', {
+      source: data.hat
+    });
+    drawHat();
+  }
+});
 
 function squeeze() {
   $('canvas').removeLayerGroup('tips');
@@ -111,7 +110,7 @@ function squeeze() {
       name: 'balloon',
       groups: ['tips'],
       layer: true,
-      source: './duck/balloon.svg',
+      source: './balloon.svg',
       x: 435,
       y: 90
     })

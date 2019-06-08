@@ -12,9 +12,9 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get('/view/:id', function(req, res) {
+  app.get('/duck/:id', function(req, res) {
     db.Duck.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render('view', {
+      res.render('duck', {
         duck: dbExample,
         id: req.params.id
       });

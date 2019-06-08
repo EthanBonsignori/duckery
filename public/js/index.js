@@ -1,18 +1,18 @@
 // The API object contains methods for each kind of request we'll make
 var API = {
-  saveExample: function(example) {
+  saveDuck: function(duck) {
     return $.ajax({
       headers: {
         'Content-Type': 'application/json'
       },
       type: 'POST',
       url: 'api/ducks',
-      data: JSON.stringify(example)
+      data: JSON.stringify(duck)
     });
   },
-  getExamples: function() {
+  getDucks: function() {
     return $.ajax({
-      url: 'api/ducks',
+      url: '/api/ducks',
       type: 'GET'
     });
   },
@@ -49,12 +49,12 @@ var handleFormSubmit = function(event) {
   var $bill = funcStyleCheck($('canvas').getLayer('bill').fillStyle, 'bill');
   var $body = funcStyleCheck($('canvas').getLayer('body').fillStyle, 'body');
   if (hatOn) {
-    var $hat = $('canvas').getLayer('hat').source;
+    var $hat = hatsrc;
   }
   if (gradientOn) {
     var $gradient = gradsrc.c1 + ',' + gradsrc.c2;
   }
-  if (gradientOn) {
+  if (patternOn) {
     var $pattern = patsrc;
   }
 
@@ -67,7 +67,7 @@ var handleFormSubmit = function(event) {
     pattern: $pattern
   };
 
-  API.saveExample(duck).then(function() {
+  API.saveDuck(duck).then(function() {
     //refreshExamples();
   });
 };

@@ -3,21 +3,11 @@ var gradientOn = false;
 // eslint-disable-next-line no-unused-vars
 var patternOn = false;
 
-$('#head_test').on('click', function() {
-  alert('Quack! My head is ' + colGradPat.head.color);
-});
-
-$('#body_test').on('click', function() {
-  alert('Quack! My body is ' + colGradPat.body.color);
-});
-
-$('#bill_test').on('click', function() {
-  alert('Quack! My bill is ' + colGradPat.bill.color);
-});
-
 $('#download').on('click', function() {
-  $('canvas').getCanvasImage();
   console.log('Download');
+  var img = $('canvas').getCanvasImage();
+  var win = window.open(img, '_blank');
+  focus(win);
 });
 
 $('#addhat').on('click', function() {
@@ -199,7 +189,6 @@ function drawBill() {
 }
 
 function drawDuck() {
-  $('canvas').clearCanvas();
   drawBody();
   drawHead();
   drawBill();
@@ -207,7 +196,7 @@ function drawDuck() {
     drawHat();
   }
 }
-
+var hatsrc = 'l3helmet.svg';
 function drawHat() {
   $('canvas').removeLayer('hat');
   $('canvas').drawImage({
@@ -221,7 +210,7 @@ function drawHat() {
     shadowBlur: 15,
     shadowX: 0,
     shadowY: 5,
-    source: './duck/accessories/l3helmet.svg',
+    source: './duck/accessories/' + hatsrc,
     x: 200,
     y: 200
   });

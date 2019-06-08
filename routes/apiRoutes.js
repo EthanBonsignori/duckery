@@ -9,7 +9,9 @@ module.exports = function(app) {
   });
 
   app.get('/api/ducks/:id', function(req, res) {
-    db.Duck.find({ where: { id: req.params.id } }).then(function(dbExamples) {
+    db.Duck.findOne({ where: { id: req.params.id } }).then(function(
+      dbExamples
+    ) {
       res.json(dbExamples);
     });
   });
