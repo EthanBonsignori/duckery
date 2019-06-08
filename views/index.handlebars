@@ -1,50 +1,113 @@
 <div id="home">
-  <div class="container">
-        <canvas id="canvas1" width="400" height="400"></canvas>
-        <br>
-        <button id="submit" class="btn btn-primary">Submit</button>
-        <br>
+  <div class="container text-center">
+      <canvas id="canvas1" width="400" height="400"></canvas>
 
-        <btn class="btn btn-primary" id="grad_test">Click to Get Add Gradient</btn>
-        <div id='gradpicker'>
-          <input type="color" id="c1_color"
-            value="#ffff00">
-          <label for="color">Gradient Color 1</label>
+      <div class="custommenus">
+        <h3>Head</h3>
+          <div class="row text-center">
+            <div class="colormenu border col-md-4">
+                <input type="color" id="head_color"
+                  value="#ffff00">
+                <label for="color"><h4>Color</h4></label>
+            </div>
 
-          <input type="color" id="c2_color"
-            value="#ffff00">
-          <label for="color">Gradient Color 2</label></div>
-        <br>
+            <div class="gradientmenu border col-md-4">
+              <btn class="btn btn-primary" id="grad_head">Click to Get Add Gradient</btn>
+              <div id='gradpicker'>
+                <input type="color" id="head_c1_color" 
+                  value="#ffff00">
+                <label for="color">Gradient Color 1</label>
+                <br>
+                <input type="color" id="head_c2_color"
+                  value="#ffff00">
+                <label for="color">Gradient Color 2</label>
+              </div>
+            </div>
 
-        <btn class="btn btn-primary" id="patt_test">Click to Get Add Pattern</btn>
-          <div id='patpicker'>
-            <img class ='img img-thumbnail pattern' src='./duck/patterns/greencamo.jpg'>
-            <img class ='img img-thumbnail pattern'src='./duck/patterns/tartan.png'>
+              <div class="patternmenu border col-md-4">
+                <btn class="btn btn-primary" id="patt_head">Click to Get Add Pattern</btn>
+                <div id='patpicker'>
+                  <img class ='img img-thumbnail pattern head-pat' src='./duck/patterns/greencamo.jpg'>
+                  <img class ='img img-thumbnail pattern heat-pat'src='./duck/patterns/tartan.png'>
+                </div>
+              </div>
           </div>
-        <br>
+      </div>
 
-        <btn class="btn btn-primary" id="addhat">Click to Toggle Hat</btn>
-        <br>
+      <hr>
+
+      <div class="custommenus">
+        <h3>Bill</h3>
+          <div class="row text-center">
+            <div class="colormenu border col-md-6">
+                <input type="color" id="bill_color"
+                  value="#ffff00">
+                <label for="color"><h4>Color</h4></label>
+            </div>
+
+              <div class="patternmenu border col-md-6">
+                <btn class="btn btn-primary" id="patt_bill">Click to Get Add Pattern</btn>
+                <div id='patpicker'>
+                  <img class ='img img-thumbnail pattern bill-pat' src='./duck/patterns/greencamo.jpg'>
+                  <img class ='img img-thumbnail pattern bill-pat'src='./duck/patterns/tartan.png'>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <hr>
+
+      <div class="custommenus">
+        <h3>Body</h3>
+          <div class="row text-center">
+            <div class="colormenu border col-md-4">
+                <input type="color" id="body_color"
+                  value="#ffff00">
+                <label for="color"><h4>Color</h4></label>
+            </div>
+
+            <div class="gradientmenu border col-md-4">
+              <btn class="btn btn-primary" id="grad_body">Click to Get Add Gradient</btn>
+              <div id='gradpicker'>
+                <input type="color" id="body_c1_color"
+                  value="#ffff00">
+                <label for="color">Gradient Color 1</label>
+                <br>
+                <input type="color" id="body_c2_color"
+                  value="#ffff00">
+                <label for="color">Gradient Color 2</label>
+              </div>
+            </div>
+
+              <div class="patternmenu border col-md-4">
+                <btn class="btn btn-primary" id="patt_body">Click to Get Add Pattern</btn>
+                <div id='patpicker'>
+                  <img class ='img img-thumbnail pattern body-pat' src='./duck/patterns/greencamo.jpg'>
+                  <img class ='img img-thumbnail pattern body-pat'src='./duck/patterns/tartan.png'>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <hr>
 
         <div>
-          <input type="color" id="head_color"
-            value="#ffff00">
-          <label for="color">Head Color</label>
-
-          <input type="color" id="bill_color"
-            value="#ffff00">
-          <label for="color">Bill Color</label>
-
-          <input type="color" id="body_color"
-            value="#ffff00">
-          <label for="color">Body Color</label>
+          <h2>Accessories</h2>
+          <btn class="btn btn-primary" id="addhat">Click to Toggle Hat</btn>
         </div>
+        <hr>
 
-
-        <br>
         <div>
-          <btn class="btn btn-primary" id="download">Download Image</btn>
+
+        <button id="submit" class="btn btn-primary">Submit</button>
+
+          <button type="button" id="download" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#thumbmodal">
+            Get An Image
+          </button>        
         </div>
+
+        {{> modals/thumbmodal}}
+
       </div>
     </div>
   </div>

@@ -28,11 +28,11 @@ var API = {
 //or a solid color (so the hex value can be passed)
 function funcStyleCheck(toCheck, checkLayer) {
   if (typeof toCheck === 'function') {
-    if (toCheck === grad) {
+    if (toCheck === headGrad || bodyGrad) {
       return 'grad';
     }
 
-    if (toCheck === pat) {
+    if (toCheck === headPat || billPat || bodyPat) {
       return 'pat';
     }
   } else {
@@ -51,11 +51,20 @@ var handleFormSubmit = function(event) {
   if (hatOn) {
     var $hat = hatsrc;
   }
-  if (gradientOn) {
-    var $gradient = gradsrc.c1 + ',' + gradsrc.c2;
+  if (headGradientOn) {
+    var $headgradient = headGradsrc.c1 + ',' + headGradsrc.c2;
   }
-  if (patternOn) {
-    var $pattern = patsrc;
+  if (headPatternOn) {
+    var $headpattern = headPatsrc;
+  }
+  if (billPatternOn) {
+    var $billpattern = billPatsrc;
+  }
+  if (bodyGradientOn) {
+    var $bodygradient = bodyGradsrc.c1 + ',' + bodyGradsrc.c2;
+  }
+  if (bodyPatternOn) {
+    var $bodypattern = bodyPatsrc;
   }
 
   var duck = {
@@ -63,8 +72,11 @@ var handleFormSubmit = function(event) {
     bill: $bill,
     body: $body,
     hat: $hat,
-    gradient: $gradient,
-    pattern: $pattern
+    headgradient: $headgradient,
+    headpattern: $headpattern,
+    billpattern: $billpattern,
+    bodygradient: $bodygradient,
+    bodypattern: $bodypattern
   };
 
   API.saveDuck(duck).then(function() {
@@ -74,3 +86,7 @@ var handleFormSubmit = function(event) {
 
 // Add event listeners to the submit and delete buttons
 $('#submit').on('click', handleFormSubmit);
+$('#submit').on('click', function() {
+  alert('Your duck has been created!');
+  location.reload();
+});

@@ -1,13 +1,18 @@
 // eslint-disable-next-line no-unused-vars
-var gradientOn = false;
+var headGradientOn = false;
 // eslint-disable-next-line no-unused-vars
-var patternOn = false;
+var bodyGradientOn = false;
+// eslint-disable-next-line no-unused-vars
+var headPatternOn = false;
+// eslint-disable-next-line no-unused-vars
+var billPatternOn = false;
+// eslint-disable-next-line no-unused-vars
+var bodyPatternOn = false;
 
 $('#download').on('click', function() {
   console.log('Download');
-  var img = $('canvas').getCanvasImage();
-  var win = window.open(img, '_blank');
-  focus(win);
+  var thumbimg = $('canvas').getCanvasImage();
+  $('#downloadurl').attr('src', thumbimg);
 });
 
 $('#addhat').on('click', function() {
@@ -16,27 +21,61 @@ $('#addhat').on('click', function() {
 
 var hatOn = false;
 
-var gradsrc = {
-  c1: 'red',
-  c2: 'white'
+var headGradsrc = {
+  c1: '',
+  c2: ''
 };
-const grad = function(layer) {
+
+var bodyGradsrc = {
+  c1: '',
+  c2: ''
+};
+
+const headGrad = function(layer) {
   return $(this).createGradient({
     // Gradient is drawn relative to layer position
     x1: 0,
     y1: layer.y - layer.height,
     x2: 0,
     y2: layer.y + layer.height,
-    c1: gradsrc.c1,
-    c2: gradsrc.c2
+    c1: headGradsrc.c1,
+    c2: headGradsrc.c2
   });
 };
 
-var patsrc = 'tartan.png';
 // eslint-disable-next-line no-unused-vars
-const pat = function(layer) {
+const bodyGrad = function(layer) {
+  return $(this).createGradient({
+    // Gradient is drawn relative to layer position
+    x1: 0,
+    y1: layer.y - layer.height,
+    x2: 0,
+    y2: layer.y + layer.height,
+    c1: bodyGradsrc.c1,
+    c2: bodyGradsrc.c2
+  });
+};
+var headPatsrc = 'tartan.png';
+var billPatsrc = 'tartan.png';
+var bodyPatsrc = 'tartan.png';
+// eslint-disable-next-line no-unused-vars
+const headPat = function(layer) {
   return $(this).createPattern({
-    source: './duck/patterns/' + patsrc,
+    source: './duck/patterns/' + headPatsrc,
+    repeat: 'repeat'
+  });
+};
+// eslint-disable-next-line no-unused-vars
+const billPat = function(layer) {
+  return $(this).createPattern({
+    source: './duck/patterns/' + billPatsrc,
+    repeat: 'repeat'
+  });
+};
+// eslint-disable-next-line no-unused-vars
+const bodyPat = function(layer) {
+  return $(this).createPattern({
+    source: './duck/patterns/' + bodyPatsrc,
     repeat: 'repeat'
   });
 };
@@ -44,18 +83,17 @@ const pat = function(layer) {
 var colGradPat = {
   head: {
     color: 'yellow',
-    pattern: pat,
-    gradient: grad
+    pattern: headPat,
+    gradient: headGrad
   },
   body: {
     color: '#ffff00',
-    pattern: pat,
-    gradient: grad
+    pattern: bodyPat,
+    gradient: bodyGrad
   },
   bill: {
     color: 'orange',
-    pattern: pat,
-    gradient: grad
+    pattern: billPat
   }
 };
 
@@ -240,33 +278,70 @@ function changeStyle(varlayer, style, val) {
   $('canvas').drawLayers();
 }
 
+/* Apply Color Functions
+ */
 $('#head_color').change(function() {
   changeStyle('head', colGradPat.head.color, $('#head_color').val());
-  gradientOn = false;
+  headPatternOn = false;
+  headGradientOn = false;
 });
 
 $('#bill_color').change(function() {
   changeStyle('bill', colGradPat.bill.color, $('#bill_color').val());
+  billPatternOn = false;
 });
 
 $('#body_color').change(function() {
   changeStyle('body', colGradPat.body.color, $('#body_color').val());
-  patternOn = false;
+  bodyPatternOn = false;
+  bodyGradientOn = false;
 });
 
-$('#grad_test').on('click', function() {
-  gradsrc.c1 = $('#c1_color').val();
-  gradsrc.c2 = $('#c2_color').val();
+/* Apply Gradient Functions
+ */
+$('#grad_head').on('click', function() {
+  headGradsrc.c1 = $('#head_c1_color').val();
+  headGradsrc.c2 = $('#head_c2_color').val();
   changeStyle('head', colGradPat.head.gradient, colGradPat.head.gradient);
-  gradientOn = true;
+  headGradientOn = true;
 });
 
-$('#patt_test').on('click', function() {
+$('#grad_body').on('click', function() {
+  bodyGradsrc.c1 = $('#body_c1_color').val();
+  bodyGradsrc.c2 = $('#body_c2_color').val();
+  changeStyle('body', colGradPat.body.gradient, colGradPat.body.gradient);
+  bodyGradientOn = true;
+});
+
+/* Apply Pattern Functions
+ */
+$('#patt_head').on('click', function() {
+  changeStyle('head', colGradPat.head.pattern, colGradPat.head.pattern);
+  headGradientOn = false;
+  headPatternOn = true;
+});
+
+$('#patt_body').on('click', function() {
   changeStyle('body', colGradPat.body.pattern, colGradPat.body.pattern);
-  patternOn = true;
+  bodyGradientOn = false;
+  bodyPatternOn = true;
 });
 
-$('.pattern').on('click', function() {
+$('#patt_bill').on('click', function() {
+  changeStyle('bill', colGradPat.bill.pattern, colGradPat.bill.pattern);
+  billPatternOn = true;
+});
+
+//
+$('.head-pat').on('click', function() {
   patRaw = $(this).attr('src');
-  patsrc = patRaw.replace('./duck/patterns/', '');
+  headPatsrc = patRaw.replace('./duck/patterns/', '');
+});
+$('.bill-pat').on('click', function() {
+  patRaw = $(this).attr('src');
+  billPatsrc = patRaw.replace('./duck/patterns/', '');
+});
+$('.body-pat').on('click', function() {
+  patRaw = $(this).attr('src');
+  bodyPatsrc = patRaw.replace('./duck/patterns/', '');
 });

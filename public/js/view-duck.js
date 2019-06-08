@@ -1,5 +1,4 @@
 $('document').ready(function() {
-  console.log('document ready');
   const obj = document.createElement('audio');
   obj.src = '../sound/squeak.wav';
   obj.volume = 0.2;
@@ -18,30 +17,47 @@ $('document').ready(function() {
 API.getDucks().then(function(data) {
   var id = $('canvas').attr('id') || '';
   var data = data[id];
-  if (data.gradient) {
-    alert('this is a gradient');
-    var gradresult = data.gradient.split(',');
-    gradsrc.c1 = gradresult[0];
-    gradsrc.c2 = gradresult[1];
+  if (data.headgradient) {
+    var gradresult = data.headgradient.split(',');
+    headGradsrc.c1 = gradresult[0];
+    headGradsrc.c2 = gradresult[1];
     $('canvas').setLayer('head', {
       // eslint-disable-next-line quotes
-      fillStyle: grad
+      fillStyle: headGrad
+    });
+  } else if (data.headpattern) {
+    headPatsrc = data.headpattern;
+    $('canvas').setLayer('head', {
+      fillStyle: headPat
     });
   } else {
-    alert('no gradient');
     $('canvas').setLayer('head', {
       fillStyle: data.head
     });
   }
+  if (data.billpattern) {
+    billPatsrc = data.billpattern;
+    $('canvas').setLayer('bill', {
+      fillStyle: billPat
+    });
+  } else {
+    $('canvas').setLayer('bill', {
+      fillStyle: data.bill
+    });
+  }
 
-  $('canvas').setLayer('bill', {
-    fillStyle: data.bill
-  });
-
-  if (data.pattern) {
-    patsrc = data.pattern;
+  if (data.bodygradient) {
+    var gradresult = data.bodygradient.split(',');
+    bodyGradsrc.c1 = gradresult[0];
+    bodyGradsrc.c2 = gradresult[1];
     $('canvas').setLayer('body', {
-      fillStyle: pat
+      // eslint-disable-next-line quotes
+      fillStyle: bodyGrad
+    });
+  } else if (data.bodypattern) {
+    bodyPatsrc = data.bodypattern;
+    $('canvas').setLayer('body', {
+      fillStyle: bodyPat
     });
   } else {
     $('canvas').setLayer('body', {
@@ -56,6 +72,7 @@ API.getDucks().then(function(data) {
     });
     drawHat();
   }
+  $('canvas').drawLayers();
 });
 
 function squeeze() {
@@ -110,7 +127,7 @@ function squeeze() {
       name: 'balloon',
       groups: ['tips'],
       layer: true,
-      source: './balloon.svg',
+      source: './duck/balloon.svg',
       x: 435,
       y: 90
     })

@@ -12,11 +12,11 @@ module.exports = function(app) {
   });
 
   // Load example page and pass in an example by id
-  app.get('/duck/:id', function(req, res) {
+  app.get('/:id', function(req, res) {
     db.Duck.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render('duck', {
         duck: dbExample,
-        id: req.params.id
+        id: req.params.id - 1
       });
     });
   });
