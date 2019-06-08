@@ -336,14 +336,17 @@ $('#patt_bill').on('click', function() {
 
 //
 $('.head-pat').on('click', function() {
+  $('#showheadPat').attr('src', $(this).attr('src'));
   headpatRaw = $(this).attr('src');
   headPatsrc = headpatRaw.replace('./duck/patterns/', '');
 });
 $('.bill-pat').on('click', function() {
+  $('#showbillPat').attr('src', $(this).attr('src'));
   billpatRaw = $(this).attr('src');
   billPatsrc = billpatRaw.replace('./duck/patterns/', '');
 });
 $('.body-pat').on('click', function() {
+  $('#showbodyPat').attr('src', $(this).attr('src'));
   bodypatRaw = $(this).attr('src');
   bodyPatsrc = bodypatRaw.replace('./duck/patterns/', '');
 });
