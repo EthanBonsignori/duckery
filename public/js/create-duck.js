@@ -82,7 +82,7 @@ const bodyPat = function(layer) {
 
 var colGradPat = {
   head: {
-    color: 'yellow',
+    color: '#ffff00',
     pattern: headPat,
     gradient: headGrad
   },
@@ -92,7 +92,7 @@ var colGradPat = {
     gradient: bodyGrad
   },
   bill: {
-    color: 'orange',
+    color: '#ffa500',
     pattern: billPat
   }
 };

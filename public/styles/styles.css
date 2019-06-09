@@ -37,7 +37,7 @@ input[type=color]{
 }
 
 .custommenus{
-  background-color: rgb(255, 255, 255, 0.8);
+  background-color: rgb(255, 255, 255, 0.4);
   border-radius: 5px
 }
 
@@ -59,14 +59,8 @@ input[type=color]{
   background-color: yellow;
 
 }
-
-.patpicker{
-  overflow-y: scroll;
-  height: 80px;
-}
-
-.hat-picker{
-  height: 110px;
+.custommenus{
+  flex: content;
 }
 
 .patpreview{
